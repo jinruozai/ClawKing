@@ -1,0 +1,7 @@
+"{'name':'id','mem':'60000~69999','type_agv':{'ref_column':'name'},'type':'id','align':'left'}",name,icon,"{'name':'quality','type_agv':{'options':[{'value':'0','label':'普通','color':'#AAAAAA'},{'value':'1','label':'稀有','color':'#00CED1'},{'value':'2','label':'史诗','color':'#DA70D6'},{'value':'3','label':'传说','color':'#FFD700'},{'value':'4','label':'神话','color':'#FF4500'}]},'type':'enum_int'}","{'name':'attribute','base_type':'array','type_render':'array','default':[],'mem':'数组列表数据','support_render':[],'type':'array[id_num]','width':175}","{'name':'affixes','base_type':'array','type_render':'array','default':[],'mem':'数组列表数据','support_render':[],'type':'array[ref_id]','width':175}","{'name':'description','type':'var','width':175}"
+60000,小螃蟹,monster_01,0,"((1000,30),(1002,10),(1003,5))",(30000),基础怪物
+60001,深海章鱼,monster_03,1,"((1000,45),(1002,12),(1003,6))",(),中级怪物
+60002,巨型海龟,monster_04,2,"((1000,80),(1002,20),(1003,20))",(),高级怪物
+60003,深海鲨鱼,monster_05,2,"((1000,60),(1002,25),(1003,10))",(),高级怪物
+60004,海妖,monster_06,3,"((1000,100),(1002,30),(1003,15))",(),传说级怪物
+60005,深海巨龙,monster_07,3,"((1000,120),(1002,35),(1003,25))",(),传说级怪物

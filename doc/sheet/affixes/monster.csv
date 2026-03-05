@@ -1,0 +1,6 @@
+"{'name':'id','type':'id','mem':'6000000~6999999'}",name,icon,"{'name':'quality','type_agv':{'options':[{'value':'0','label':'普通','color':'#AAAAAA'},{'value':'1','label':'稀有','color':'#00CED1'},{'value':'2','label':'史诗','color':'#DA70D6'},{'value':'3','label':'传说','color':'#FFD700'},{'value':'4','label':'神话','color':'#FF4500'}]},'type':'enum_int'}","{'name':'attribute','type':'array[id_num]','width':175}","{'name':'affixes','type':'array[ref_id]','width':175}","{'name':'description','type':'var','width':175}"
+6000000,怪物力量词条,affix_monster_01,0,"((1002,3))","()",增强怪物攻击力
+6000001,怪物防御词条,affix_monster_02,1,"((1003,3))","()",增强怪物防御力
+6000002,怪物生命词条,affix_monster_03,1,"((1000,15))","()",增加怪物生命值
+6000003,怪物速度词条,affix_monster_04,2,"((1004,1))","()",增加怪物移动速度
+6000004,怪物暴击词条,affix_monster_05,3,"((1007,3))","()",增加怪物暴击率

@@ -1,0 +1,7 @@
+"{'name':'id','type':'id','mem':'3000000~3999999'}",name,icon,"{'name':'quality','type_agv':{'options':[{'value':'0','label':'普通','color':'#AAAAAA'},{'value':'1','label':'稀有','color':'#00CED1'},{'value':'2','label':'史诗','color':'#DA70D6'},{'value':'3','label':'传说','color':'#FFD700'},{'value':'4','label':'神话','color':'#FF4500'}]},'type':'enum_int'}","{'name':'attribute','type':'array[id_num]','width':175}","{'name':'affixes','type':'array[ref_id]','width':175}","{'name':'description','type':'var','width':175}"
+3000000,治疗增强词条,affix_item_01,0,"((1000,5))","()",增强治疗效果
+3000001,攻击增强词条,affix_item_02,1,"((1002,3))","()",增强攻击效果
+3000002,防御增强词条,affix_item_03,1,"((1003,3))","()",增强防御效果
+3000003,速度增强词条,affix_item_04,2,"((1004,1))","()",增强速度效果
+3000004,魔法增强词条,affix_item_05,2,"((1001,5))","()",增强魔法效果
+3000005,暴击增强词条,affix_item_06,3,"((1007,3))","()",增强暴击效果

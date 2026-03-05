@@ -1,0 +1,9 @@
+"{'name':'id','type':'id','mem':'2000000~2999999'}",name,icon,"{'name':'quality','type_agv':{'options':[{'value':'0','label':'普通','color':'#AAAAAA'},{'value':'1','label':'稀有','color':'#00CED1'},{'value':'2','label':'史诗','color':'#DA70D6'},{'value':'3','label':'传说','color':'#FFD700'},{'value':'4','label':'神话','color':'#FF4500'}]},'type':'enum_int'}","{'name':'attribute','type':'array[id_num]','width':175}","{'name':'affixes','type':'array[ref_id]','width':175}","{'name':'description','type':'var','width':175}"
+2000000,力量词条,affix_role_01,0,"((1002,5))","()",增加攻击力
+2000001,防御词条,affix_role_02,0,"((1003,5))","()",增加防御力
+2000002,生命词条,affix_role_03,1,"((1000,10))","()",增加生命值
+2000003,魔法词条,affix_role_04,1,"((1001,10))","()",增加魔法值
+2000004,速度词条,affix_role_05,2,"((1004,2))","()",增加移动速度
+2000005,暴击词条,affix_role_06,2,"((1007,5))","()",增加暴击率
+2000006,闪避词条,affix_role_07,3,"((1008,5))","()",增加闪避率
+2000007,命中词条,affix_role_08,3,"((1009,5))","()",增加命中值

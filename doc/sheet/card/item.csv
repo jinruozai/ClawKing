@@ -1,0 +1,11 @@
+"{'name':'id','type':'id','mem':'30000~39999','type_agv':{'ref_column':'name'},'align':'left'}",name,icon,"{'name':'quality','type_agv':{'options':[{'value':'0','label':'普通','color':'#AAAAAA'},{'value':'1','label':'稀有','color':'#00CED1'},{'value':'2','label':'史诗','color':'#DA70D6'},{'value':'3','label':'传说','color':'#FFD700'},{'value':'4','label':'神话','color':'#FF4500'}]},'type':'enum_int'}","{'name':'attribute','base_type':'array','type_render':'array','default':[],'mem':'数组列表数据','support_render':[],'type':'array[id_num]','width':175}","{'name':'affixes','base_type':'array','type_render':'array','default':[],'mem':'数组列表数据','support_render':[],'type':'array[ref_id]','width':175}","{'name':'description','type':'var','width':175}"
+30000,坚硬甲壳,item_01,0,"((1003,5))",(),基础防御装备
+30001,治疗药剂,item_02,0,"((1000,10))",(),恢复生命值
+30002,速度靴,item_03,1,"((1004,2))",(),增加行动速度
+30003,力量药水,item_04,1,"((1002,5),(1003,-1))",(),临时增加攻击力
+30004,护盾,item_05,2,"((1003,10))",(),提供护盾吸收伤害
+30005,沉默卷轴,item_06,2,"((1001,30))",(),使目标沉默一回合
+30006,反射盾,item_07,3,"((1003,8),(1002,20))",(),反弹部分伤害
+30007,时间沙漏,item_08,3,"((1004,1))",(),增加行动次数
+30008,魔法药水,item_09,0,"((1001,20))",(),恢复魔法值
+30009,暴击符文,item_10,2,"((1007,10))",(),增加暴击率

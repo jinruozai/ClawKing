@@ -1,0 +1,7 @@
+"{'name':'id','type':'id','mem':'5000000~5999999'}",name,icon,"{'name':'quality','type_agv':{'options':[{'value':'0','label':'普通','color':'#AAAAAA'},{'value':'1','label':'稀有','color':'#00CED1'},{'value':'2','label':'史诗','color':'#DA70D6'},{'value':'3','label':'传说','color':'#FFD700'},{'value':'4','label':'神话','color':'#FF4500'}]},'type':'enum_int'}","{'name':'attribute','type':'array[id_num]','width':175}","{'name':'affixes','type':'array[ref_id]','width':175}","{'name':'description','type':'var','width':175}"
+5000000,伤害增强词条,affix_skill_01,0,"((1002,2))","()",增强技能伤害
+5000001,消耗减少词条,affix_skill_02,1,"((1001,-2))","()",减少技能消耗
+5000002,范围增加词条,affix_skill_03,1,"((1005,1))","()",增加技能范围
+5000003,冷却减少词条,affix_skill_04,2,"((1006,1))","()",减少技能冷却
+5000004,效果增强词条,affix_skill_05,2,"((1000,5))","()",增强技能效果
+5000005,传说技能词条,affix_skill_06,3,"((1002,5),(1001,-5))","()",传说级技能增强词条
