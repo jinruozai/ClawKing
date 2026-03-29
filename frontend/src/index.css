@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Anton", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-tech: "Rajdhani", sans-serif;
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #ef4444;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+body {
+  background-color: #09090b;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   Season Nameplate Animations
+   ═══════════════════════════════════════════════ */
+@layer utilities {
+  .bg-size-200 {
+    background-size: 200% 200%;
+  }
+}
+
+@keyframes np2-laser-sweep {
+  0% { transform: translateX(-200%) skewX(-30deg); }
+  100% { transform: translateX(400%) skewX(-30deg); }
+}
+@keyframes np2-pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+@keyframes np2-spin-slow {
+  100% { transform: rotate(360deg); }
+}
+@keyframes np2-float-particle {
+  0% { transform: translateY(10px) scale(1.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-40px) scale(0.2); opacity: 0; }
+}
+@keyframes np2-float-ember {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translate(40px, -40px) scale(0.2); opacity: 0; }
+}
+@keyframes np2-bg-pan-x {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+@keyframes np2-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes np2-scanline {
+  0% { transform: translateY(-20px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100px); opacity: 0; }
+}
+@keyframes np2-neon-pulse {
+  0%, 100% { box-shadow: 0 0 5px var(--c-p-alpha), inset 0 0 5px var(--c-p-alpha); border-color: var(--c-p-alpha); }
+  50% { box-shadow: 0 0 15px var(--c-p-glow), inset 0 0 10px var(--c-p-alpha); border-color: var(--c-p-glow); }
+}
+
+.np2-spin-slow { animation: np2-spin-slow 10s linear infinite; }
+.np2-particle { animation: np2-float-particle 1.5s ease-in infinite; }
+.np2-ember { animation: np2-float-ember 3s ease-in infinite; }
+.np2-scanline { animation: np2-scanline 3s linear infinite; }
+.np2-neon-pulse { animation: np2-neon-pulse 2s ease-in-out infinite; }
+.np2-gradient-shift { animation: np2-gradient-shift 4s ease infinite; }
+
+.np2-p1 { animation-delay: 0s; left: 10%; }
+.np2-p2 { animation-delay: 0.5s; left: 30%; }
+.np2-p3 { animation-delay: 1s; left: 50%; }
+.np2-p4 { animation-delay: 1.5s; left: 70%; }
+.np2-p5 { animation-delay: 0.2s; left: 90%; }
+.np2-p6 { animation-delay: 0.8s; left: 20%; }
+.np2-p7 { animation-delay: 1.2s; left: 60%; }
+.np2-p8 { animation-delay: 0.4s; left: 80%; }
+
+/* ═══════════════════════════════════════════════
+   Lobster SVG Animations
+   ═══════════════════════════════════════════════ */
+.claw-left, .claw-right { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* ── Idle State ── */
+@keyframes breathe {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.02) translateY(-3px); }
+}
+@keyframes tailSway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+@keyframes floatLeft {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.05) translate(2px, -5px); }
+}
+@keyframes floatRight {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(-5deg) scale(1.05) translate(-2px, -5px); }
+}
+@keyframes idleAntennaL {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+}
+@keyframes idleAntennaR {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+.is-idle .lobster-body-inner {
+  animation: breathe 2s ease-in-out infinite;
+  transform-origin: 256px 256px;
+}
+.tail-1 { transform-origin: 256px 270px; }
+.tail-2 { transform-origin: 256px 315px; }
+.tail-3 { transform-origin: 256px 365px; }
+.tail-4 { transform-origin: 256px 415px; }
+.tail-5 { transform-origin: 256px 460px; }
+
+.is-idle .tail-1 { animation: tailSway 2s ease-in-out infinite; }
+.is-idle .tail-2 { animation: tailSway 2s ease-in-out infinite -0.2s; }
+.is-idle .tail-3 { animation: tailSway 2s ease-in-out infinite -0.4s; }
+.is-idle .tail-4 { animation: tailSway 2s ease-in-out infinite -0.6s; }
+.is-idle .tail-5 { animation: tailSway 2s ease-in-out infinite -0.8s; }
+.is-idle .claw-left {
+  animation: floatLeft 2s ease-in-out infinite;
+  transform-origin: 226px 150px;
+}
+.is-idle .claw-right {
+  animation: floatRight 2s ease-in-out infinite;
+  transform-origin: 286px 150px;
+}
+.is-idle .antenna-l {
+  animation: idleAntennaL 3s ease-in-out infinite;
+  transform-origin: 256px 120px;
+}
+.is-idle .antenna-r {
+  animation: idleAntennaR 3s ease-in-out infinite;
+  transform-origin: 256px 120px;
+}
+
+/* ── Walking State ── */
+@keyframes bodyBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes walkLeg {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+@keyframes walkLegReverse {
+  0%, 100% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+}
+
+.is-walking .lobster-body-inner {
+  animation: bodyBob 0.5s ease-in-out infinite;
+  transform-origin: 256px 256px;
+}
+.is-walking .tail-1 { animation: tailSway 0.5s ease-in-out infinite; }
+.is-walking .tail-2 { animation: tailSway 0.5s ease-in-out infinite -0.05s; }
+.is-walking .tail-3 { animation: tailSway 0.5s ease-in-out infinite -0.1s; }
+.is-walking .tail-4 { animation: tailSway 0.5s ease-in-out infinite -0.15s; }
+.is-walking .tail-5 { animation: tailSway 0.5s ease-in-out infinite -0.2s; }
+.leg-l-1 { transform-origin: 212px 200px; }
+.leg-l-2 { transform-origin: 218px 230px; }
+.leg-l-3 { transform-origin: 226px 260px; }
+.leg-r-1 { transform-origin: 300px 200px; }
+.leg-r-2 { transform-origin: 294px 230px; }
+.leg-r-3 { transform-origin: 286px 260px; }
+.is-walking .leg-l-1, .is-walking .leg-l-3, .is-walking .leg-r-2 {
+  animation: walkLeg 0.5s ease-in-out infinite;
+}
+.is-walking .leg-l-2, .is-walking .leg-r-1, .is-walking .leg-r-3 {
+  animation: walkLegReverse 0.5s ease-in-out infinite;
+}
+.is-walking .claw-left {
+  animation: floatLeft 0.5s ease-in-out infinite;
+  transform-origin: 226px 150px;
+}
+.is-walking .claw-right {
+  animation: floatRight 0.5s ease-in-out infinite;
+  transform-origin: 286px 150px;
+}
+.is-walking .antenna-l {
+  animation: idleAntennaL 0.5s ease-in-out infinite;
+  transform-origin: 256px 120px;
+}
+.is-walking .antenna-r {
+  animation: idleAntennaR 0.5s ease-in-out infinite;
+  transform-origin: 256px 120px;
+}
+
+/* ── Charging State ── */
+@keyframes chargeShakeLeft {
+  0% { transform: rotate(-10deg) scale(0.9) translate(-5px, 15px); }
+  100% { transform: rotate(-15deg) scale(0.9) translate(-8px, 18px); }
+}
+@keyframes chargeShakeRight {
+  0% { transform: rotate(10deg) scale(0.9) translate(5px, 15px); }
+  100% { transform: rotate(15deg) scale(0.9) translate(8px, 18px); }
+}
+@keyframes pulseCore {
+  0% { r: 22px; opacity: 0.8; }
+  100% { r: 26px; opacity: 1; }
+}
+
+.is-charging .claw-left {
+  animation: chargeShakeLeft 0.05s infinite alternate;
+  transform-origin: 226px 150px;
+}
+.is-charging .claw-right {
+  animation: chargeShakeRight 0.05s infinite alternate;
+  transform-origin: 286px 150px;
+}
+.is-charging .energy-core {
+  fill: #ffaa00;
+  r: 24px;
+  animation: pulseCore 0.05s infinite alternate;
+}
+
+/* ── Attacking State ── */
+@keyframes attackBody {
+  0% { transform: translateY(0) scale(1); }
+  15% { transform: translateY(10px) scale(0.95); }
+  35% { transform: translateY(-15px) scale(1.05); }
+  50% { transform: translateY(-5px) scale(1.02); }
+  70% { transform: translateY(-15px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes attackTail {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(8deg); }
+  35% { transform: rotate(-6deg); }
+  50% { transform: rotate(3deg); }
+  70% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes attackLegs {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(15deg); }
+  35% { transform: rotate(-15deg); }
+  50% { transform: rotate(5deg); }
+  70% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes attackAntennaL {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-15deg); }
+  35% { transform: rotate(25deg); }
+  50% { transform: rotate(-5deg); }
+  70% { transform: rotate(25deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes attackAntennaR {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(15deg); }
+  35% { transform: rotate(-25deg); }
+  50% { transform: rotate(5deg); }
+  70% { transform: rotate(-25deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes fistBumpLeft {
+  0% { transform: rotate(0deg) translate(0, 0) scale(1); }
+  15% { transform: rotate(-10deg) translate(-5px, 5px) scale(0.9); }
+  35% { transform: rotate(25deg) translate(20px, -15px) scale(1.1); }
+  50% { transform: rotate(10deg) translate(10px, -5px) scale(1); }
+  70% { transform: rotate(25deg) translate(20px, -15px) scale(1.1); }
+  100% { transform: rotate(0deg) translate(0, 0) scale(1); }
+}
+@keyframes fistBumpRight {
+  0% { transform: rotate(0deg) translate(0, 0) scale(1); }
+  15% { transform: rotate(10deg) translate(5px, 5px) scale(0.9); }
+  35% { transform: rotate(-25deg) translate(-20px, -15px) scale(1.1); }
+  50% { transform: rotate(-10deg) translate(-10px, -5px) scale(1); }
+  70% { transform: rotate(-25deg) translate(-20px, -15px) scale(1.1); }
+  100% { transform: rotate(0deg) translate(0, 0) scale(1); }
+}
+
+.is-attacking .lobster-body-inner {
+  animation: attackBody 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  transform-origin: 256px 256px;
+}
+.is-attacking .tail-1, .is-attacking .tail-2, .is-attacking .tail-3, .is-attacking .tail-4, .is-attacking .tail-5 {
+  animation: attackTail 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+.is-attacking .leg-l-1, .is-attacking .leg-l-2, .is-attacking .leg-l-3,
+.is-attacking .leg-r-1, .is-attacking .leg-r-2, .is-attacking .leg-r-3 {
+  animation: attackLegs 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+.is-attacking .antenna-l {
+  animation: attackAntennaL 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  transform-origin: 256px 120px;
+}
+.is-attacking .antenna-r {
+  animation: attackAntennaR 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  transform-origin: 256px 120px;
+}
+.is-attacking .claw-left {
+  animation: fistBumpLeft 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  transform-origin: 226px 150px;
+}
+.is-attacking .claw-right {
+  animation: fistBumpRight 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  transform-origin: 286px 150px;
+}
+.is-attacking .energy-core {
+  fill: #ffffff;
+  r: 35px;
+  filter: drop-shadow(0 0 30px #fff);
+}

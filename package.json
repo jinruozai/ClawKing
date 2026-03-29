@@ -1,0 +1,9 @@
+{
+  "name": "claw-arena",
+  "type": "module",
+  "version": "2.0.0",
+  "description": "Claw Arena - On-chain AI battle arena",
+  "scripts": {
+    "dev": "cd frontend && npx vite --port=3000"
+  }
+}

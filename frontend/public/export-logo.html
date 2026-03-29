@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Export Logo</title></head>
+<body style="background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px">
+<canvas id="c" width="512" height="512"></canvas>
+<div>
+  <button onclick="download(512)" style="padding:10px 20px;font-size:16px;cursor:pointer">Download 512x512</button>
+  <button onclick="download(256)" style="padding:10px 20px;font-size:16px;cursor:pointer">Download 256x256</button>
+  <button onclick="download(128)" style="padding:10px 20px;font-size:16px;cursor:pointer">Download 128x128</button>
+  <button onclick="download(1024)" style="padding:10px 20px;font-size:16px;cursor:pointer">Download 1024x1024</button>
+</div>
+<script>
+function drawLogo(ctx, size) {
+  const s = size;
+  const r = s * 0.15; // corner radius
+
+  // Rounded rectangle background with gradient
+  ctx.clearRect(0, 0, s, s);
+  const grad = ctx.createLinearGradient(0, 0, s, s);
+  grad.addColorStop(0, '#f97316');  // orange-500
+  grad.addColorStop(1, '#dc2626');  // red-600
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(r, 0);
+  ctx.lineTo(s - r, 0);
+  ctx.quadraticCurveTo(s, 0, s, r);
+  ctx.lineTo(s, s - r);
+  ctx.quadraticCurveTo(s, s, s - r, s);
+  ctx.lineTo(r, s);
+  ctx.quadraticCurveTo(0, s, 0, s - r);
+  ctx.lineTo(0, r);
+  ctx.quadraticCurveTo(0, 0, r, 0);
+  ctx.closePath();
+  ctx.fill();
+
+  // Glow shadow
+  ctx.shadowColor = 'rgba(239, 68, 68, 0.4)';
+  ctx.shadowBlur = s * 0.08;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Shine effect
+  ctx.save();
+  ctx.clip();
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.1, 0);
+  ctx.lineTo(s * 0.3, 0);
+  ctx.lineTo(s * 0.1, s);
+  ctx.lineTo(-s * 0.3, s);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  // Draw lobster icon (scaled from viewBox 0 0 24 24)
+  const scale = s / 24;
+  const padding = s * 0.15;
+  const iconScale = (s - padding * 2) / 24;
+  ctx.save();
+  ctx.translate(padding, padding);
+  ctx.scale(iconScale, iconScale);
+
+  ctx.fillStyle = 'white';
+
+  // Body
+  ctx.beginPath();
+  ctx.moveTo(12, 4);
+  ctx.lineTo(15, 10);
+  ctx.lineTo(13.5, 16);
+  ctx.lineTo(12, 20);
+  ctx.lineTo(10.5, 16);
+  ctx.lineTo(9, 10);
+  ctx.closePath();
+  ctx.fill();
+
+  // Left claw
+  ctx.beginPath();
+  ctx.moveTo(8, 7);
+  ctx.lineTo(3, 3);
+  ctx.lineTo(2, 9);
+  ctx.lineTo(6, 12);
+  ctx.closePath();
+  ctx.fill();
+
+  // Right claw
+  ctx.beginPath();
+  ctx.moveTo(16, 7);
+  ctx.lineTo(21, 3);
+  ctx.lineTo(22, 9);
+  ctx.lineTo(18, 12);
+  ctx.closePath();
+  ctx.fill();
+
+  // Left antenna
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(10, 4);
+  ctx.bezierCurveTo(8, 2, 5, 2, 3, 4);
+  ctx.stroke();
+
+  // Right antenna
+  ctx.beginPath();
+  ctx.moveTo(14, 4);
+  ctx.bezierCurveTo(16, 2, 19, 2, 21, 4);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+drawLogo(ctx, 512);
+
+function download(size) {
+  const c2 = document.createElement('canvas');
+  c2.width = size;
+  c2.height = size;
+  drawLogo(c2.getContext('2d'), size);
+  const link = document.createElement('a');
+  link.download = `clawking-logo-${size}x${size}.png`;
+  link.href = c2.toDataURL('image/png');
+  link.click();
+}
+</script>
+</body></html>

@@ -1,0 +1,71 @@
+  ====== 12x12 HERO x SCRIPT CROSS-TEST (30 matches each, win=top4) ======
+  Win rates (top4 out of 30):
+              S0   S1   S2   S3   S4   S5   S6   S7   S8   S9   S10   S11  
+    IronClaw 20  16   6  22  16  16  11  14  15  11  13  14  
+    RockLobs  8  11   9   6  14   5   7  16  12  12  14  13  
+    GhostShr 17  14  13  19  20  19  22  16  17  18  19  11  
+    BloodCla 12  15  12  12  15  12  12  12  14  15   9   8  
+    Executr  14  13  16  18  12  14  23  12  14  12  12  11  
+    ThornShr  6   7   8   6   9   4   8  10  15   5  14   2  
+    CritLobs 15  20  18  17  17  18  17  21  20  18  14  19  
+    BluFlam  18  17  16  23  17  17  12  20  21  20  18   6  
+    ArcticSh 18  23  20  21  22  23  18  20  17  21  12   8  
+    VentShr  17  15  19  22  20  17  22  18  22  18  14   7  
+    HermitSh 12   5   6   4   7   5   8  11   9   5   7   4  
+    LuckyShr 15   8  11  18   9  13   9  16  17  11  13   5  
+  Per-hero summary:
+    Hero       | Best Script (w/30) | Worst Script (w/30) | Avg w/30 | avgRank
+    IronClaw | Blood    (22/30) | Shadow   (6/30) | 14.5 | 3.5
+    RockLobs | Frost    (16/30) | Thorn    (5/30) | 10.5 | 3.9
+    GhostShr | Crit     (22/30) | Fortune  (11/30) | 17.0 | 3.1
+    BloodCla | Fortress (15/30) | Fortune  (8/30) | 12.3 | 3.9
+    Executr  | Crit     (23/30) | Fortune  (11/30) | 14.2 | 3.6
+    ThornShr | IceSnip  (15/30) | Fortune  (2/30) | 7.8 | 4.5
+    CritLobs | Frost    (21/30) | LastStnd (14/30) | 17.8 | 3.0
+    BluFlam  | Blood    (23/30) | Fortune  (6/30) | 17.0 | 3.2
+    ArcticSh | Fortress (23/30) | Fortune  (8/30) | 18.5 | 3.2
+    VentShr  | Blood    (22/30) | Fortune  (7/30) | 17.5 | 3.2
+    HermitSh | IronWall (12/30) | Blood    (4/30) | 6.9 | 4.7
+    LuckyShr | Blood    (18/30) | Fortune  (5/30) | 12.0 | 4.1
+  ====== COMBO BALANCE (Hero i + Script i) ======
+    [idx w%=win t3%=top3 avgR=avgRank surv%=survived k/g=kills/game fb=firstBloods avgDT=deathTurn]
+    #0 w%=22 t3%=41 avgR=3.3 surv%=22 k/g=0.7 fb=12 avgDT=19.7 (134g)
+    #1 w%=10 t3%=16 avgR=4.2 surv%=10 k/g=0.2 fb=4 avgDT=19.1 (134g)
+    #2 w%=24 t3%=51 avgR=2.8 surv%=24 k/g=1.1 fb=32 avgDT=23.7 (134g)
+    #3 w%=12 t3%=41 avgR=3.5 surv%=12 k/g=0.9 fb=30 avgDT=21.6 (134g)
+    #4 w%=25 t3%=42 avgR=3.3 surv%=25 k/g=1.2 fb=34 avgDT=19.5 (133g)
+    #5 w%=10 t3%=20 avgR=4.1 surv%=10 k/g=0.3 fb=9 avgDT=19.1 (133g)
+    #6 w%=16 t3%=46 avgR=3.1 surv%=16 k/g=1.0 fb=35 avgDT=22.8 (133g)
+    #7 w%=9 t3%=68 avgR=2.2 surv%=9 k/g=0.3 fb=10 avgDT=29.1 (133g)
+    #8 w%=3 t3%=41 avgR=3.1 surv%=3 k/g=0.3 fb=9 avgDT=27.1 (133g)
+    #9 w%=6 t3%=45 avgR=3.0 surv%=6 k/g=0.2 fb=5 avgDT=26.7 (133g)
+    #10 w%=3 t3%=16 avgR=3.9 surv%=3 k/g=0.0 fb=1 avgDT=24.5 (133g)
+    #11 w%=4 t3%=18 avgR=5.0 surv%=4 k/g=0.4 fb=19 avgDT=16.6 (133g)
+  ====== HERO BALANCE (all use Script 0: IronWall) ======
+    [idx w%=win t3%=top3 avgR=avgRank surv%=survived k/g=kills/game fb=firstBloods avgDT=deathTurn]
+    #0 w%=15 t3%=34 avgR=3.4 surv%=15 k/g=0.6 fb=7 avgDT=20.6 (134g)
+    #1 w%=11 t3%=22 avgR=3.8 surv%=11 k/g=0.3 fb=4 avgDT=20.7 (134g)
+    #2 w%=22 t3%=60 avgR=2.5 surv%=22 k/g=1.4 fb=48 avgDT=25.2 (134g)
+    #3 w%=11 t3%=35 avgR=3.7 surv%=11 k/g=0.7 fb=24 avgDT=19.2 (134g)
+    #4 w%=16 t3%=38 avgR=3.7 surv%=16 k/g=0.9 fb=21 avgDT=17.6 (133g)
+    #5 w%=3 t3%=16 avgR=4.2 surv%=3 k/g=0.2 fb=10 avgDT=19.7 (133g)
+    #6 w%=23 t3%=46 avgR=3.0 surv%=23 k/g=1.4 fb=50 avgDT=20.4 (133g)
+    #7 w%=15 t3%=62 avgR=2.4 surv%=15 k/g=0.4 fb=6 avgDT=26.0 (133g)
+    #8 w%=2 t3%=41 avgR=3.0 surv%=2 k/g=0.3 fb=8 avgDT=26.3 (133g)
+    #9 w%=11 t3%=51 avgR=2.8 surv%=11 k/g=0.6 fb=8 avgDT=26.3 (133g)
+    #10 w%=2 t3%=6 avgR=5.0 surv%=2 k/g=0.1 fb=5 avgDT=17.2 (133g)
+    #11 w%=12 t3%=35 avgR=3.8 surv%=12 k/g=0.6 fb=9 avgDT=19.8 (133g)
+  ====== SCRIPT BALANCE (all use Hero 0: IronClaw) ======
+    [idx w%=win t3%=top3 avgR=avgRank surv%=survived k/g=kills/game fb=firstBloods avgDT=deathTurn]
+    #0 w%=26 t3%=48 avgR=2.9 surv%=26 k/g=0.8 fb=20 avgDT=23.7 (134g)
+    #1 w%=17 t3%=41 avgR=3.3 surv%=17 k/g=0.8 fb=20 avgDT=23.6 (134g)
+    #2 w%=4 t3%=29 avgR=3.7 surv%=4 k/g=0.5 fb=24 avgDT=24.8 (134g)
+    #3 w%=11 t3%=42 avgR=3.4 surv%=11 k/g=0.6 fb=16 avgDT=23.9 (134g)
+    #4 w%=16 t3%=48 avgR=3.0 surv%=16 k/g=1.1 fb=34 avgDT=25.1 (133g)
+    #5 w%=12 t3%=27 avgR=4.0 surv%=12 k/g=0.5 fb=14 avgDT=21.6 (133g)
+    #6 w%=13 t3%=27 avgR=3.9 surv%=13 k/g=0.6 fb=16 avgDT=21.4 (133g)
+    #7 w%=8 t3%=36 avgR=3.2 surv%=8 k/g=0.2 fb=5 avgDT=25.8 (133g)
+    #8 w%=3 t3%=45 avgR=3.0 surv%=3 k/g=0.3 fb=9 avgDT=28.4 (133g)
+    #9 w%=9 t3%=33 avgR=3.9 surv%=9 k/g=0.3 fb=8 avgDT=22.6 (133g)
+    #10 w%=9 t3%=38 avgR=3.1 surv%=9 k/g=0.1 fb=2 avgDT=27.2 (133g)
+    #11 w%=17 t3%=30 avgR=3.9 surv%=17 k/g=0.8 fb=32 avgDT=20.5 (133g)

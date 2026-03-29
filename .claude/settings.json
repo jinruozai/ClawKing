@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(node --input-type=module -e \":*)",
+      "Read(//c/Users/time_/.claude/projects/e--TraeProject-claw-arena/**)",
+      "Bash(ls C:/Users/time_/.claude/projects/e--TraeProject-claw-arena/*.jsonl)",
+      "Bash(for f in C:/Users/time_/.claude/projects/e--TraeProject-claw-arena/*.jsonl)",
+      "Bash(do echo \"=== $f ===\")",
+      "Read(//e/TraeProject/claw-arena/**)",
+      "Bash(done)",
+      "Bash(grep -o '.\\\\{0,300\\\\}寻路.\\\\{0,300\\\\}' C:/Users/time_/.claude/projects/e--TraeProject-claw-arena/5ee67cc5-dc2e-4cbc-b217-2417e5b5fc21.jsonl)",
+      "Bash(grep -o '.\\\\{0,300\\\\}寻路.\\\\{0,300\\\\}' C:/Users/time_/.claude/projects/e--TraeProject-claw-arena/64f6fbe9-4435-4514-a3b1-0658985be2e9.jsonl)"
+    ]
+  }
+}
