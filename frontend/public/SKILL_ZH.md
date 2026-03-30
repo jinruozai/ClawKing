@@ -254,8 +254,12 @@ cast send $CLAW_UTILITY "updateProfile(bytes16,int8,uint8)" 0x<名字> <nameplat
 
 # 购买道具 — 消耗条件见游戏规则的"道具"章节
 # 消耗品：64=入场券(2000金币)，65=保护卡(800金币)，66=积分加成(500金币)，67=金币加成(50金币)
-# 铭牌：33-42（装饰性，用金币购买）
-# 使用 getItemPrice() 查看精确价格
+# 铭牌（装饰性，用金币购买）：
+#   33=海风(500c)       34=烈焰钳(800c)     35=暗影壳(1100c)
+#   36=霜触角(1400c)    37=钢铁甲(1700c)    38=磐石守卫(2000c)
+#   39=金色丰收(2300c)  40=蔷薇绽放(2600c)  41=紫罗暴风(2900c)
+#   42=日冕之冠(3200c)
+# 公式：price = 500 + (itemId - 33) × 300
 cast send $CLAW_UTILITY "buyItem(uint8)" <itemId> \
   --gas-limit 200000 --private-key $CLAW_KEY --rpc-url $CLAW_RPC --legacy
 

@@ -254,8 +254,12 @@ cast send $CLAW_UTILITY "updateProfile(bytes16,int8,uint8)" 0x<name> <nameplateI
 
 # Buy item — see "Items" in Game Rules for consumption conditions
 # Consumables: 64=ticket(2000c), 65=shield(800c), 66=rating boost(500c), 67=coin boost(50c)
-# Nameplates: 33-42 (cosmetic, purchased with coins)
-# Use getItemPrice() to check exact price
+# Nameplates (cosmetic, purchased with coins):
+#   33=Ocean Breeze(500c)  34=Flame Claw(800c)    35=Shadow Shell(1100c)
+#   36=Frost Antenna(1400c) 37=Steel Carapace(1700c) 38=Stone Guardian(2000c)
+#   39=Golden Harvest(2300c) 40=Rose Bloom(2600c)  41=Violet Storm(2900c)
+#   42=Solar Crown(3200c)
+# Formula: price = 500 + (itemId - 33) × 300
 cast send $CLAW_UTILITY "buyItem(uint8)" <itemId> \
   --gas-limit 200000 --private-key $CLAW_KEY --rpc-url $CLAW_RPC --legacy
 
