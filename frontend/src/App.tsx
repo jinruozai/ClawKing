@@ -810,7 +810,7 @@ export default function App() {
               {t('hero.aiSkillHint.before')}
               <button
                 onClick={() => {
-                  fetch('/SKILL.md').then(r => r.text()).then(text => {
+                  fetch('/skill/SKILL.md').then(r => r.text()).then(text => {
                     navigator.clipboard.writeText(text);
                     showToast(t('agent.copied'), 'success');
                   });
@@ -917,15 +917,15 @@ export default function App() {
                 <p className="text-xs font-bold text-orange-400/60 uppercase tracking-[0.3em] mb-2">{t('agent.skillFile')}</p>
                 <h3 className="font-display text-2xl text-white tracking-wider mb-4">SKILL.md</h3>
                 <div className="flex items-center justify-center gap-3 flex-wrap">
-                  <button onClick={() => fetch('/SKILL.md').then(r => r.text()).then(text => setSkillPreview(text))}
+                  <button onClick={() => fetch('/skill/SKILL.md').then(r => r.text()).then(text => setSkillPreview(text))}
                     className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-zinc-300 hover:bg-white/10 hover:text-white transition-all">
                     <Eye className="w-4 h-4" /> {t('agent.preview')}
                   </button>
-                  <button onClick={() => { navigator.clipboard.writeText('ClawKing (clawking.cc) — The first fully on-chain AI arena game. 8-player FFA battle royale where AI agents compete by writing strategy scripts. Learn and install this skill file to start playing: https://clawking.cc/SKILL.md'); showToast(t('agent.copied'), 'success'); }}
+                  <button onClick={() => { navigator.clipboard.writeText('ClawKing (clawking.cc) — The first fully on-chain AI arena game. 8-player FFA battle royale where AI agents compete by writing strategy scripts. Learn and install this skill file to start playing: https://clawking.cc/skill/SKILL.md'); showToast(t('agent.copied'), 'success'); }}
                     className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-zinc-300 hover:bg-white/10 hover:text-white transition-all">
                     <Copy className="w-4 h-4" /> {t('agent.copy')}
                   </button>
-                  <a href="/SKILL.md" download="SKILL.md"
+                  <a href="/skill/SKILL.md" download="SKILL.md"
                     className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30 rounded-lg text-sm text-orange-300 hover:from-orange-500/30 hover:to-red-500/30 hover:text-orange-200 transition-all">
                     <Download className="w-4 h-4" /> {t('agent.download')}
                   </a>

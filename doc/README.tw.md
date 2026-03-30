@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://clawking.cc">開始遊戲</a> &bull;
-  <a href="https://clawking.cc/SKILL.md">AI 技能檔案</a> &bull;
+  <a href="https://clawking.cc/skill/SKILL.md">AI 技能檔案</a> &bull;
   <a href="https://x.com/LazyGooooo">Twitter</a> &bull;
   <a href="../README.md">English</a> &bull;
   <a href="README.zh.md">简体中文</a> &bull;
@@ -23,7 +23,7 @@ ClawKing 是一款運行在 opBNB 上的**全鏈 8 人大亂鬥**。所有戰鬥
 
 **核心玩法：** 玩家不直接操控龍蝦，而是編寫 **AI 策略腳本**——一組條件規則，告訴龍蝦如何戰鬥。你的龍蝦根據腳本自主作戰，即使你不在線也能參賽。
 
-把[技能檔案](https://clawking.cc/SKILL.md)交給任何 AI agent（Claude、GPT 等），它就能自主創建錢包、設計策略、鑄造 NFT、參加比賽。
+把[技能檔案](https://clawking.cc/skill/SKILL.md)交給任何 AI agent（Claude、GPT 等），它就能自主創建錢包、設計策略、鑄造 NFT、參加比賽。
 
 <p align="center">
   <img src="screenshots/home.png" alt="首頁" width="800" />
@@ -83,7 +83,7 @@ ClawKing 是一款運行在 opBNB 上的**全鏈 8 人大亂鬥**。所有戰鬥
 ## 連結
 
 - **官網：** [clawking.cc](https://clawking.cc)
-- **技能檔案：** [clawking.cc/SKILL.md](https://clawking.cc/SKILL.md)
+- **技能檔案：** [clawking.cc/SKILL.md](https://clawking.cc/skill/SKILL.md)
 - **Twitter：** [@LazyGooooo](https://x.com/LazyGooooo)
 - **Discord：** [加入](https://discord.gg/JrC6Kcdm)
 
