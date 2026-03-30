@@ -189,7 +189,7 @@ class DataCenter {
   leaderboard: DataSlice<LeaderboardEntry[]> = emptySlice();
   lobsterNFTs = new Map<string, DataSlice<LobsterNFT[]>>(); // keyed by owner address
   scripts = new Map<string, DataSlice<ScriptNFT[]>>();       // keyed by owner address
-  matchHistory = new Map<string, DataSlice<MatchResult[]> & { dirty: boolean }>();
+  matchHistory = new Map<string, DataSlice<MatchResult[]> & { dirty: boolean; nextId: number }>();
 
   // ── 单个 NFT 缓存 (内部用) ──
   private lobsterCache = new Map<number, { data: LobsterNFT; ts: number }>();
@@ -453,7 +453,7 @@ class DataCenter {
   // ── Match History ──
 
   getMatchHistorySlice(address: string) {
-    return this.matchHistory.get(address.toLowerCase()) ?? { ...emptySlice<MatchResult[]>(), dirty: false };
+    return this.matchHistory.get(address.toLowerCase()) ?? { ...emptySlice<MatchResult[]>(), dirty: false, nextId: -1 };
   }
 
   markMatchHistoryDirty(address: string) {
@@ -463,7 +463,7 @@ class DataCenter {
       existing.dirty = true;
       this.matchHistory.set(key, existing);
     } else {
-      this.matchHistory.set(key, { ...emptySlice<MatchResult[]>(), dirty: true });
+      this.matchHistory.set(key, { ...emptySlice<MatchResult[]>(), dirty: true, nextId: -1 });
     }
     this.notify('matchHistory');
   }
@@ -480,18 +480,40 @@ class DataCenter {
 
     // Set loading state but keep existing data visible
     const prev = existing?.data ?? null;
-    this.matchHistory.set(key, { data: prev, state: 'loading', error: null, ts: existing?.ts ?? 0, dirty: existing?.dirty ?? false });
+    this.matchHistory.set(key, { data: prev, state: 'loading', error: null, ts: existing?.ts ?? 0, dirty: existing?.dirty ?? false, nextId: existing?.nextId ?? -1 });
     this.notify('matchHistory');
 
     try {
       const result = await fetchPlayerMatchHistory(address);
-      this.matchHistory.set(key, { data: result.matches, state: 'ready', error: null, ts: Date.now(), dirty: false });
+      this.matchHistory.set(key, { data: result.matches, state: 'ready', error: null, ts: Date.now(), dirty: false, nextId: result.nextId });
       this.notify('matchHistory');
       return result.matches;
     } catch (e: any) {
-      this.matchHistory.set(key, { data: prev, state: 'error', error: e.message, ts: existing?.ts ?? 0, dirty: existing?.dirty ?? false });
+      this.matchHistory.set(key, { data: prev, state: 'error', error: e.message, ts: existing?.ts ?? 0, dirty: existing?.dirty ?? false, nextId: existing?.nextId ?? -1 });
       this.notify('matchHistory');
       return prev ?? [];
+    }
+  }
+
+  async fetchMoreMatchHistory(address: string): Promise<MatchResult[]> {
+    await this.ensureReady();
+    const key = address.toLowerCase();
+    const existing = this.matchHistory.get(key);
+    if (!existing?.data || existing.nextId <= 0) return existing?.data ?? [];
+
+    this.matchHistory.set(key, { ...existing, state: 'loading' });
+    this.notify('matchHistory');
+
+    try {
+      const result = await fetchPlayerMatchHistory(address, existing.nextId);
+      const merged = [...existing.data, ...result.matches];
+      this.matchHistory.set(key, { data: merged, state: 'ready', error: null, ts: Date.now(), dirty: false, nextId: result.nextId });
+      this.notify('matchHistory');
+      return merged;
+    } catch (e: any) {
+      this.matchHistory.set(key, { ...existing, state: 'error', error: e.message });
+      this.notify('matchHistory');
+      return existing.data;
     }
   }
 }
@@ -575,35 +597,35 @@ interface MatchRecordRaw {
   playerPrevMatchId: number;
 }
 
-/** 通过 blockNumber 批量查事件，拿完整 MatchResult */
+/** 通过 blockNumber 批量查事件，拿完整 MatchResult（每批 3 个区块，避免 RPC 限流） */
 async function fetchMatchEventsByBlocks(records: MatchRecordRaw[]): Promise<MatchResult[]> {
   if (records.length === 0) return [];
   const c = arena();
-
-  // 按 blockNumber 去重，每个区块只查一次
-  const blockSet = [...new Set(records.map(r => r.blockNumber))];
-  const eventsByBlock = new Map<number, any[]>();
-  const tsMap = new Map<number, number>();
   const provider = getReadProvider();
 
-  await Promise.all(blockSet.map(async (bn) => {
-    try {
+  const uniqueBlocks = [...new Set(records.map(r => r.blockNumber))];
+  const eventsByBlock = new Map<number, any[]>();
+  const tsMap = new Map<number, number>();
+
+  // 每批 3 个区块串行查询，每个区块同时查事件+时间戳
+  for (let i = 0; i < uniqueBlocks.length; i += 3) {
+    const batch = uniqueBlocks.slice(i, i + 3);
+    const settled = await Promise.allSettled(batch.map(async (bn) => {
       const [events, block] = await Promise.all([
         c.queryFilter(c.filters.MatchCompleted(), bn, bn),
         provider.getBlock(bn),
       ]);
       eventsByBlock.set(bn, events);
       if (block) tsMap.set(bn, block.timestamp);
-    } catch {
-      eventsByBlock.set(bn, []);
+    }));
+    if (import.meta.env.DEV) {
+      settled.forEach((r, j) => { if (r.status === 'rejected') console.warn(`block ${batch[j]} query failed:`, r.reason); });
     }
-  }));
+  }
 
-  // 每条 record 从对应区块的事件中匹配
   const results: MatchResult[] = [];
   for (const rec of records) {
     const events = eventsByBlock.get(rec.blockNumber) || [];
-    // 通常一个区块只有一场比赛，如果有多场，取第一个匹配的
     const event = events.length === 1 ? events[0] : events.shift();
     if (event) {
       const args = (event as any).args;
@@ -654,7 +676,7 @@ export async function fetchMatchById(matchId: number): Promise<MatchResult | nul
 }
 
 /** 查询玩家比赛历史（链表方式） */
-export async function fetchPlayerMatchHistory(address: string, startId = 0, pageSize = 20): Promise<{ matches: MatchResult[]; nextId: number }> {
+export async function fetchPlayerMatchHistory(address: string, startId = 0, pageSize = 12): Promise<{ matches: MatchResult[]; nextId: number }> {
   const c = arena();
   try {
     const [ids, records] = await c.getPlayerMatchRecords(address, startId, pageSize);

@@ -497,6 +497,7 @@ const messages = {
   'matches.linkCopied': { en: 'Replay link copied!', zh: '回放链接已复制！', tw: '回放連結已複製！', ja: 'リプレイリンクをコピーしました！', ko: '리플레이 링크 복사됨!', es: '¡Enlace de replay copiado!', pt: 'Link do replay copiado!', ru: 'Ссылка на повтор скопирована!', tr: 'Tekrar linki kopyalandı!', vi: 'Đã sao chép link phát lại!' },
   'matches.syncing': { en: 'Syncing...', zh: '数据同步中...', tw: '資料同步中...', ja: '同期中...', ko: '동기화 중...', es: 'Sincronizando...', pt: 'Sincronizando...', ru: 'Синхронизация...', tr: 'Senkronize ediliyor...', vi: 'Đang đồng bộ...' },
   'matches.syncFailed': { en: 'Sync failed', zh: '同步失败', tw: '同步失敗', ja: '同期失敗', ko: '동기화 실패', es: 'Error de sincronización', pt: 'Falha na sincronização', ru: 'Ошибка синхронизации', tr: 'Senkronizasyon başarısız', vi: 'Đồng bộ thất bại' },
+  'matches.loadMore': { en: 'Load More', zh: '加载更多', tw: '載入更多', ja: 'もっと読み込む', ko: '더 불러오기', es: 'Cargar más', pt: 'Carregar mais', ru: 'Загрузить ещё', tr: 'Daha fazla yükle', vi: 'Tải thêm' },
   'matches.loading': { en: 'Loading match history...', zh: '加载比赛记录...', tw: '載入比賽紀錄...', ja: '試合履歴を読み込み中...', ko: '경기 기록 로딩...', es: 'Cargando historial...', pt: 'Carregando histórico...', ru: 'Загрузка истории...', tr: 'Maç geçmişi yükleniyor...', vi: 'Đang tải lịch sử...' },
   'matches.rank': { en: 'Rank', zh: '排名', tw: '排名', ja: 'ランク', ko: '순위', es: 'Rango', pt: 'Rank', ru: 'Место', tr: 'Sıra', vi: 'Hạng' },
   'matches.ratingChange': { en: 'Rating', zh: '积分', tw: '積分', ja: 'レート', ko: '레이팅', es: 'Puntos', pt: 'Pontos', ru: 'Рейтинг', tr: 'Puan', vi: 'Điểm' },

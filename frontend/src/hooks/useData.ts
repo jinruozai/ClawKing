@@ -174,13 +174,17 @@ export function useOwnedScripts(address: string | null): DataResult<ScriptNFT[]>
 }
 
 // ── 比赛记录 ──
-export function useMatchHistory(address: string | null): DataResult<MatchResult[]> & { dirty: boolean } {
+export function useMatchHistory(address: string | null): DataResult<MatchResult[]> & { dirty: boolean; hasMore: boolean; loadMore: () => void } {
   useDataCenterKey('matchHistory');
 
   const slice = address ? dataCenter.getMatchHistorySlice(address) : null;
 
   const refresh = useCallback(() => {
     if (address) dataCenter.fetchMatchHistory(address, true).catch(() => {});
+  }, [address]);
+
+  const loadMore = useCallback(() => {
+    if (address) dataCenter.fetchMoreMatchHistory(address).catch(() => {});
   }, [address]);
 
   // 首次加载或面板打开时触发
@@ -195,6 +199,8 @@ export function useMatchHistory(address: string | null): DataResult<MatchResult[
     error: slice?.error ?? null,
     loading: st === 'loading',
     dirty: slice?.dirty ?? false,
+    hasMore: (slice?.nextId ?? 0) > 0,
+    loadMore,
     refresh,
   };
 }

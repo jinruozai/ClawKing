@@ -111,7 +111,7 @@ export default function App() {
   const { data: player, refresh: refreshPlayer } = usePlayer(walletAddress);
   const { data: globalStats } = useGlobalStats();
   const { data: leaderboard } = useLeaderboard();
-  const { data: matchHistory, state: matchHistoryState, refresh: refreshMatchHistory } = useMatchHistory(walletAddress);
+  const { data: matchHistory, state: matchHistoryState, refresh: refreshMatchHistory, hasMore: hasMoreMatches, loadMore: loadMoreMatches } = useMatchHistory(walletAddress);
 
   // Derive rank info from player rating
   const rankInfo = useMemo(() => getRankInfo(player?.rating ?? 0), [player?.rating]);
@@ -1448,6 +1448,16 @@ export default function App() {
                     </div>
                   );
                 })}
+                {hasMoreMatches && (
+                  <button
+                    onClick={loadMoreMatches}
+                    disabled={matchHistoryState === 'loading'}
+                    className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-zinc-400 text-sm font-tech transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {matchHistoryState === 'loading' ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                    {t('matches.loadMore')}
+                  </button>
+                )}
               </div>
             </motion.div>
           </motion.div>
