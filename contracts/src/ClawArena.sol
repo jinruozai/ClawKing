@@ -363,7 +363,7 @@ contract ClawArena is Initializable {
             uint256 penalty = uint256(-rc);
             uint256 tierFloor = (p.rating / TIER_DIVISOR) * TIER_DIVISOR;
             if (p.rating <= penalty) p.rating = 0;
-            else if (p.rating - penalty < tierFloor) p.rating = tierFloor;
+            else if (p.rating > tierFloor && p.rating - penalty < tierFloor) p.rating = tierFloor;
             else p.rating -= penalty;
         }
     }
