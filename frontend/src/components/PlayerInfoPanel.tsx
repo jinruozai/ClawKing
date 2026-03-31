@@ -98,8 +98,8 @@ export const PlayerInfoPanel: React.FC<Props> = ({
   async function handleSubmit() {
     if (!hasChanges || saving || !showToast || !onRefresh || !signer) return;
     const trimmed = nameInput.trim();
-    if (nameChanged && trimmed.length > 12) {
-      showToast(`Max ${12} chars`, 'error');
+    if (nameChanged && new TextEncoder().encode(trimmed).byteLength > 16) {
+      showToast(`Max 16 bytes`, 'error');
       return;
     }
     setSaving(true);
@@ -188,12 +188,15 @@ export const PlayerInfoPanel: React.FC<Props> = ({
                 <input
                   type="text"
                   value={nameInput}
-                  onChange={e => setNameInput(e.target.value)}
-                  maxLength={12}
+                  onChange={e => {
+                    let v = e.target.value;
+                    while (new TextEncoder().encode(v).byteLength > 16) v = [...v].slice(0, -1).join('');
+                    setNameInput(v);
+                  }}
                   placeholder={displayName}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none transition-colors placeholder:text-zinc-600"
                 />
-                <p className="text-xs text-zinc-600 mt-1">{12} chars max</p>
+                <p className="text-xs text-zinc-600 mt-1">16 bytes max</p>
               </>
             ) : (
               <p className="text-white text-sm">{displayName}</p>

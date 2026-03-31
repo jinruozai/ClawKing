@@ -332,12 +332,18 @@ function MintTab({ lang, signer, showToast, walletAddress, onMinted }: {
   const addr = walletAddress || ADDRESSES.ScriptHub;
   const { refresh: refreshScripts } = useOwnedScripts(addr);
 
-  const sanitizeName = (v: string) => v.replace(/\s/g, '').slice(0, 12);
+  const nameBytes = (s: string) => new TextEncoder().encode(s).byteLength;
+  const sanitizeName = (v: string) => {
+    let s = v.replace(/\s/g, '');
+    while (nameBytes(s) > 12) s = [...s].slice(0, -1).join('');
+    return s;
+  };
   const MIN_NAME_LEN = 2;
 
   const handleMint = async () => {
     if (!signer) { showToast?.(t('toast.connectWalletFirst'), 'error'); return; }
     if (scriptName.length < MIN_NAME_LEN) { showToast?.(t('mint.nameTooShort'), 'error'); return; }
+    if (nameBytes(scriptName) > 12) { showToast?.(t('mint.nameTooLong'), 'error'); return; }
 
     // Get current data from ScriptPanel (handles both UI and raw JSON mode)
     const data = panelRef.current?.getData();
@@ -399,7 +405,7 @@ function MintTab({ lang, signer, showToast, walletAddress, onMinted }: {
         <input
           value={scriptName}
           onChange={e => setScriptName(sanitizeName(e.target.value))}
-          placeholder={`${MIN_NAME_LEN}-12 chars`}
+          placeholder={`${MIN_NAME_LEN}-12 bytes`}
           className="w-56 min-w-0 bg-zinc-900 border border-white/10 rounded-lg px-2.5 py-2 text-sm text-white placeholder-zinc-600 outline-none focus:border-cyan-500/50"
           disabled={minting}
         />

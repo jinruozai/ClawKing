@@ -1016,6 +1016,7 @@ const messages = {
   'mint.lobster.failed': { en: 'Mint failed', zh: '铸造失败', tw: '鑄造失敗', ja: '鋳造失敗', ko: '민팅 실패', es: 'Acuñación fallida', pt: 'Cunhagem falhou', ru: 'Ошибка минта', tr: 'Basım başarısız', vi: 'Đúc thất bại' },
   'mint.lobster.owned': { en: 'Owned:', zh: '拥有:', tw: '擁有:', ja: '所持:', ko: '보유:', es: 'Poseído:', pt: 'Possuído:', ru: 'Имеется:', tr: 'Sahip:', vi: 'Sở hữu:' },
   'mint.nameTooShort': { en: 'Name must be at least 2 characters', zh: '名字至少2个字符', tw: '名字至少2個字符', ja: '名前は2文字以上', ko: '이름은 2자 이상', es: 'Nombre mínimo 2 caracteres', pt: 'Nome mínimo 2 caracteres', ru: 'Имя минимум 2 символа', tr: 'Ad en az 2 karakter', vi: 'Tên ít nhất 2 ký tự' },
+  'mint.nameTooLong': { en: 'Name exceeds byte limit', zh: '名字超出字节限制', tw: '名字超出位元組限制', ja: '名前がバイト制限を超えています', ko: '이름이 바이트 제한 초과', es: 'Nombre excede el límite', pt: 'Nome excede o limite', ru: 'Имя превышает лимит', tr: 'Ad bayt sınırını aşıyor', vi: 'Tên vượt quá giới hạn' },
 
   // ── Mint Script (Player) ──
   'mint.script': { en: 'Mint Script NFT', zh: '铸造脚本NFT', tw: '鑄造腳本NFT', ja: 'スクリプトNFT鋳造', ko: '스크립트 NFT 민팅', es: 'Acuñar script NFT', pt: 'Cunhar script NFT', ru: 'Минт скрипта', tr: 'Script NFT bas', vi: 'Đúc script NFT' },

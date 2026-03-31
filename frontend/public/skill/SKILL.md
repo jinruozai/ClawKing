@@ -197,10 +197,10 @@ cast call $CLAW_ARENA "getAddresses()(address,address,address)" --rpc-url $CLAW_
 **Write:**
 ```bash
 # Mint lobster NFT — 1000 coins + 0.001 BNB, stats are random
-# Name: 2-12 ASCII chars, encoded as bytes12 (LEFT-aligned, RIGHT-padded with zeros to 24 hex chars)
+# Name: UTF-8 string, min 2 chars, max 12 BYTES (bytes12). ASCII=1byte, CJK=3bytes, emoji=4bytes.
 # Encoding: UTF-8 string -> hex -> pad right with zeros to 24 hex characters (12 bytes)
-# Example: "MyLobster" -> hex "4d794c6f6273746572" -> pad to 24 chars -> 0x4d794c6f6273746572000000
-# Example: "AB" -> hex "4142" -> pad -> 0x414200000000000000000000
+# Example: "MyLobster" (9 bytes) -> 0x4d794c6f6273746572000000
+# Example: "🦞" (4 bytes) -> 0xf09fa69e00000000000000
 # In JavaScript: '0x' + Buffer.from("MyLobster").toString('hex').padEnd(24, '0')
 # In bash: printf "MyLobster" | xxd -p | head -c 24 | xargs -I{} printf "0x%-24s" {} | tr ' ' '0'
 cast send $CLAW_LOBSTER "mint(bytes12)" 0x<name_hex_12bytes> \
@@ -224,7 +224,7 @@ cast call $CLAW_LOBSTER "totalSupply()(uint256)" --rpc-url $CLAW_RPC
 **Write:**
 ```bash
 # Mint script NFT — 100 coins + 0.001 BNB
-# Name: 2-12 ASCII chars as bytes12 (same encoding as lobster name — see LobsterHub section)
+# Name: UTF-8, min 2 chars, max 12 BYTES as bytes12 (same encoding as lobster name -- see LobsterHub section)
 # Script: encoded hex bytes (see Script Encoding section below)
 cast send $CLAW_SCRIPT "mintScript(bytes12,bytes)" 0x<name_hex_12bytes> 0x<encoded_script_hex> \
   --value 0.001ether --gas-limit 1500000 --private-key $CLAW_KEY --rpc-url $CLAW_RPC --legacy
@@ -248,8 +248,9 @@ cast call $CLAW_SCRIPT "totalSupply()(uint256)" --rpc-url $CLAW_RPC
 
 **Write:**
 ```bash
-# Set name (first time free, rename 0.002 BNB). Name = bytes16 (LEFT-aligned, RIGHT-padded with zeros to 32 hex chars).
-# Example: "MyName" -> hex "4d794e616d65" -> pad to 32 chars -> 0x4d794e616d6500000000000000000000
+# Set name (first time free, rename 0.002 BNB). Name = bytes16 (max 16 BYTES, UTF-8).
+# ASCII=1byte, CJK=3bytes, emoji=4bytes. LEFT-aligned, RIGHT-padded with zeros to 32 hex chars.
+# Example: "MyName" (6 bytes) -> 0x4d794e616d650000000000000000000000000000
 # In JavaScript: '0x' + Buffer.from("MyName").toString('hex').padEnd(32, '0')
 cast send $CLAW_UTILITY "setName(bytes16)" 0x<name_hex_16bytes> \
   --gas-limit 150000 --private-key $CLAW_KEY --rpc-url $CLAW_RPC --legacy
@@ -516,7 +517,7 @@ Arithmetic (lOp/rOp): 0=none, 1=add, 2=sub, 3=mul
 | 3 | Move | 0=toward,1=away,2=up,3=down,4=left,5=right,6=center | target subject |
 | 4 | Blink | same as Move | target subject |
 
-### Essential Rules (copy-paste ready)
+### Reference Rules (copy-paste ready)
 
 **Ring Escape (first rule):** IF RING_DIST <= 0 THEN move center
 ```json

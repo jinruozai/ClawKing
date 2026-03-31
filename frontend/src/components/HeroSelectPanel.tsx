@@ -6,6 +6,7 @@ import { MINT_LOBSTER_COINS, MINT_BNB } from '../config/constants';
 import { InteractiveLobsterCard } from './InteractiveLobsterCard';
 import { RadarChart } from './RadarChart';
 import { partColorsToTheme, type LobsterPartColors } from './Lobster';
+import { MintSuccessDialog } from './MintSuccessDialog';
 import { mintLobsterNFT, fetchLobsterNFT, parseContractError, type LobsterNFT } from '../services/dataStore';
 import { useOwnedLobsters } from '../hooks/useData';
 import { ADDRESSES } from '../config/contracts';
@@ -93,14 +94,19 @@ export function HeroSelectPanel({ currentHeroId, onSelect, onClose, walletAddres
   const MINT_COST = MINT_LOBSTER_COINS;
   const MIN_NAME_LEN = 2;
 
-  // 名字过滤：去掉空格和特殊字符，只保留字母数字和常见符号
-  const sanitizeName = (v: string) => v.replace(/\s/g, '').slice(0, 12);
-  const nameValid = mintName.length >= MIN_NAME_LEN && mintName.length <= 12;
+  const nameBytes = (s: string) => new TextEncoder().encode(s).byteLength;
+  const sanitizeName = (v: string) => {
+    let s = v.replace(/\s/g, '');
+    while (nameBytes(s) > 12) s = [...s].slice(0, -1).join('');
+    return s;
+  };
+  const nameValid = mintName.length >= MIN_NAME_LEN && nameBytes(mintName) <= 12;
 
   // 铸造龙虾
   const handleMint = async () => {
     if (!signer) { showToast?.(t('toast.connectWalletFirst'), 'error'); return; }
     if (mintName.length < MIN_NAME_LEN) { showToast?.(t('mint.nameTooShort'), 'error'); return; }
+    if (nameBytes(mintName) > 12) { showToast?.(t('mint.nameTooLong'), 'error'); return; }
     if (playerCoins < MINT_COST) { showToast?.(t('error.insufficientCoins'), 'error'); return; }
     setMinting(true);
     try {
@@ -265,43 +271,20 @@ export function HeroSelectPanel({ currentHeroId, onSelect, onClose, walletAddres
         </div>
       </div>
 
+      {/* ── Mint Success ── */}
+      {showMintDialog && mintedNFT && (
+        <MintSuccessDialog nft={mintedNFT} onClose={() => { setShowMintDialog(false); setMintedNFT(null); setMintName(''); }} />
+      )}
+
       {/* ── Mint Dialog ── */}
-      {showMintDialog && (
-        <div className="fixed inset-0 z-[110] bg-black/70 flex items-center justify-center p-6" onMouseDown={() => !minting && !mintedNFT && setShowMintDialog(false)}>
+      {showMintDialog && !mintedNFT && (
+        <div className="fixed inset-0 z-[110] bg-black/70 flex items-center justify-center p-6" onMouseDown={() => !minting && setShowMintDialog(false)}>
           <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl w-full max-w-md p-6" onMouseDown={e => e.stopPropagation()}>
             {/* 状态：铸造中 */}
             {minting ? (
               <div className="flex flex-col items-center gap-4 py-8">
                 <Loader2 className="w-12 h-12 text-orange-500 animate-spin" />
                 <p className="text-sm text-zinc-400">{t('mint.lobster.minting')}</p>
-              </div>
-            ) : mintedNFT ? (
-              /* 状态：铸造成功 */
-              <div className="flex flex-col items-center gap-4 py-4">
-                {/* 闪光背景 */}
-                <div className="relative">
-                  <div className="absolute inset-0 -m-4 rounded-full bg-gradient-to-r from-orange-500/30 via-yellow-400/20 to-orange-500/30 blur-xl animate-pulse" />
-                  <div className="relative w-40 h-40">
-                    <InteractiveLobsterCard
-                      theme={partColorsToTheme(nftToPartColors(mintedNFT), nftToStats(mintedNFT))}
-                      selected={false}
-                      onClick={() => {}}
-                      className="!p-2 !gap-1 pointer-events-none"
-                    >
-                      <p className="text-xs font-bold text-white text-center truncate">{lobsterDisplayName(mintedNFT.tokenId, mintedNFT.name)}</p>
-                    </InteractiveLobsterCard>
-                  </div>
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="text-lg font-display text-orange-400 tracking-wider">{t('mint.lobster.success')}</p>
-                  <p className="text-sm text-white font-bold">{lobsterDisplayName(mintedNFT.tokenId, mintedNFT.name)}</p>
-                </div>
-                <button
-                  onClick={() => { setShowMintDialog(false); setMintedNFT(null); setMintName(''); }}
-                  className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-bold text-sm hover:scale-[1.02] transition-transform shadow-lg"
-                >
-                  {t('hero.confirm')}
-                </button>
               </div>
             ) : (
               /* 状态：输入 */
@@ -321,7 +304,7 @@ export function HeroSelectPanel({ currentHeroId, onSelect, onClose, walletAddres
                   <input
                     value={mintName}
                     onChange={e => setMintName(sanitizeName(e.target.value))}
-                    placeholder={`${MIN_NAME_LEN}-12 chars`}
+                    placeholder={`${MIN_NAME_LEN}-12 bytes`}
                     className="w-full bg-zinc-900 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-orange-500/50"
                   />
                 </div>
