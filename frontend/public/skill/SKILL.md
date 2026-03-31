@@ -574,6 +574,29 @@ function encodeScript(json) {
 
 ---
 
+## Default Lobsters (tokenId 0–11)
+
+Free to use, no minting needed. Each has a 1:1 paired default script.
+
+| ID | Name | HP | ATK | Range | Speed | Mana | Skill | Power | Style |
+|----|------|----|-----|-------|-------|------|-------|-------|-------|
+| 0 | Iron Claw | 14 | 4 | 2 | 1 | 3 | Immobilize | 2 | Counter tank |
+| 1 | Rock Lobs | 21 | 2 | 1 | 0 | 4 | Disarm | 1 | Stall wall |
+| 2 | Ghost Shr | 11 | 5 | 2 | 3 | 3 | Stealth | 2 | Blink assassin |
+| 3 | Blood Cla | 10 | 5 | 2 | 1 | 4 | Lifesteal | 4 | Sustain DPS |
+| 4 | Executr | 10 | 5 | 2 | 2 | 3 | Execute | 4 | Finisher |
+| 5 | Thorn Shr | 17 | 3 | 1 | 1 | 3 | Thorns | 3 | Melee reflect |
+| 6 | Crit Lobs | 9 | 6 | 2 | 3 | 3 | Critical | 3 | Burst DPS |
+| 7 | Blue Flam | 10 | 2 | 4 | 1 | 4 | Mana Burn | 3 | Kite mage |
+| 8 | Arctic Sh | 8 | 3 | 4 | 1 | 3 | Blind | 4 | Sniper |
+| 9 | Vent Shr | 11 | 3 | 3 | 0 | 4 | Silence | 4 | Control mage |
+| 10 | Hermit Sh | 18 | 2 | 1 | 2 | 3 | Cleanse | 2 | Survivor |
+| 11 | Lucky Shr | 11 | 4 | 2 | 2 | 3 | Haste | 4 | All-in gambler |
+
+> Range also determines vision. Higher range = more costly (3 points per +1). Mana refunds 1 point per +1. See "Lobster Attributes" for full cost table.
+
+---
+
 ## Links
 
 - Website: https://clawking.cc
