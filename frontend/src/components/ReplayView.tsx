@@ -6,12 +6,12 @@ import { t } from '../i18n';
 import { BattleRenderer } from '../game/renderer/PixiRenderer';
 import { ReplayEngine } from '../game/ReplayEngine';
 import { simulateMatchAsync } from '../game/simulateMatch';
-import { fetchLobsterSprites, fetchScriptNFT } from '../services/dataStore';
+import { fetchLobsterNFT, fetchLobsterSprites, fetchScriptNFT } from '../services/dataStore';
 import { BGM } from '../audio/BGM';
 import { SFX } from '../audio/SoundFX';
 import type { GameEvent } from '../game/types';
 import { calcLevel } from '../engine/combat';
-import { parseSkillEffects, SKILL_EFFECT_BITS, scriptDisplayName } from '../config/game';
+import { lobsterDisplayName, parseSkillEffects, SKILL_EFFECT_BITS, scriptDisplayName } from '../config/game';
 import { EXPOSURE_DMG_PCT, EXPOSURE_ATK_PCT, BLINK_RANGE, BLINK_COOLDOWN, ATTACK_EXP } from '../config/constants';
 import type { MatchEvent, SettlementResult } from '../types';
 import { PlayerNameTag } from './PlayerNameTag';
@@ -70,6 +70,7 @@ export default function ReplayView({ matchEvent, settlement, onBack, lang, roomI
   const [scriptModalOpen, setScriptModalOpen] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [scriptModalLabel, setScriptModalLabel] = useState('');
+  const [selectedHeroName, setSelectedHeroName] = useState('');
 
   const matchedRuleIdx = -1; // TODO: track from engine script_match events
   const [settlementOpen, setSettlementOpen] = useState(false);
@@ -342,6 +343,28 @@ export default function ReplayView({ matchEvent, settlement, onBack, lang, roomI
   const showRightPanel = isRightPanelOpen && selected != null;
   const selectedScript = selected && matchEvent.scripts ? matchEvent.scripts[selected.eid] : null;
 
+  useEffect(() => {
+    let cancelled = false;
+    if (!selected) {
+      setSelectedHeroName('');
+      return;
+    }
+
+    const heroId = selected.heroId;
+    setSelectedHeroName(lobsterDisplayName(heroId));
+    fetchLobsterNFT(heroId)
+      .then((nft) => {
+        if (!cancelled) setSelectedHeroName(lobsterDisplayName(heroId, nft.name));
+      })
+      .catch(() => {
+        if (!cancelled) setSelectedHeroName(lobsterDisplayName(heroId));
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selected]);
+
   // Progressive leveling: compute cumulative exp thresholds
   // Level N needs: 10, 15, 20, 25, ... (base=10, step=5)
   // Cumulative: L1=10, L2=25, L3=45, L4=70, ...
@@ -593,7 +616,7 @@ export default function ReplayView({ matchEvent, settlement, onBack, lang, roomI
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center gap-2">
                       <span className="text-yellow-400 font-tech font-bold text-sm shrink-0">Lv.{selected.level + 1}</span>
-                      <h2 className={`font-display text-lg tracking-wider truncate ${selected.eid === mySlotIdx ? 'text-green-400' : 'text-white'}`}>{selected.name}</h2>
+                      <h2 className={`font-display text-lg tracking-wider truncate ${selected.eid === mySlotIdx ? 'text-green-400' : 'text-white'}`}>{selectedHeroName || selected.name}</h2>
                       {!selected.visible && <span className="text-red-500 text-xs font-bold ml-2 shrink-0">{t('replay.dead')}</span>}
                       <span className="text-zinc-500 text-[10px] font-tech ml-auto shrink-0">EXP {selected.exp}/{selectedNextExp}</span>
                     </div>

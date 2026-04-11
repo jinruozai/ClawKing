@@ -9,9 +9,9 @@ import type { GameResult, TurnSnapshot, GameEvent as EngineGameEvent, EntitySnap
 import type { GameEvent as OldGameEvent, InitEntity } from './types';
 import { TYPE_PLAYER } from './types';
 import type { MatchEvent, EngineEvent, RankingEntry } from '../types';
-import { fetchLobsterNFT, fetchScriptBytes } from '../services/dataStore';
+import { fetchLobsterNFT, fetchScriptBytes, fetchPlayer } from '../services/dataStore';
 import type { LobsterNFT } from '../services/dataStore';
-import { MAP_SIZE, parseSkillEffects, lobsterDisplayName } from '../config/game';
+import { MAP_SIZE, parseSkillEffects, defaultName } from '../config/game';
 import { ethers } from 'ethers';
 
 const ENGINE_VERSION = 2;
@@ -93,7 +93,7 @@ export interface SimulationResult {
 function convertTurnsToOldEvents(
   turns: TurnSnapshot[],
   nfts: Map<number, LobsterNFT>,
-  players: string[],
+  playerNames: string[],
   heroTokenIds: number[],
 ): OldGameEvent[] {
   const events: OldGameEvent[] = [];
@@ -105,8 +105,7 @@ function convertTurnsToOldEvents(
   const initEntities: InitEntity[] = t0.entities.map(ent => {
     const nft = nfts.get(ent.idx);
     const heroTokenId = heroTokenIds[ent.idx] ?? ent.idx;
-    const addr = players[ent.idx] || '';
-    const name = lobsterDisplayName(heroTokenId, nft?.name) || ('Claw' + (addr ? addr.slice(-4) : ent.idx));
+    const name = playerNames[ent.idx] || `Claw${ent.idx}`;
     const skillNames = nft ? parseSkillEffects(nft.skillEffect).map(s => s.key).join('+') : '';
     return {
       eid: ent.idx,
@@ -284,6 +283,7 @@ export async function simulateMatchAsync(matchEvent: MatchEvent): Promise<Simula
     const heroTokenIds: number[] = (matchEvent as any).heroTokenIds || matchEvent.heroIds || [];
     const scriptTokenIds: number[] = (matchEvent as any).scriptTokenIds || [];
     const matchPlayers: string[] = matchEvent.players || [];
+    const playerNames: string[] = [];
 
     // 并行获取所有 NFT 和脚本
     const lobsterStats: bigint[] = [];
@@ -307,6 +307,16 @@ export async function simulateMatchAsync(matchEvent: MatchEvent): Promise<Simula
       catch { scripts[i] = new Uint8Array(0); }
     }));
 
+    await Promise.all(matchPlayers.map(async (address, i) => {
+      const fallback = address ? defaultName(address) : `Claw${i}`;
+      try {
+        const player = await fetchPlayer(address);
+        playerNames[i] = player.name || fallback;
+      } catch {
+        playerNames[i] = fallback;
+      }
+    }));
+
     // 解码脚本字节 → { slots, rules }，填充到 matchEvent.scripts 供回放 ScriptPanel 使用
     matchEvent.scripts = scripts.map(s => s.length > 0 ? decodeScriptBytes(s) : { slots: [], rules: [] });
 
@@ -319,7 +329,7 @@ export async function simulateMatchAsync(matchEvent: MatchEvent): Promise<Simula
     const hashMatch = chainHash ? localHash === chainHash.toLowerCase() : null;
 
     // 转换成老格式（含 init）
-    matchEvent.events = convertTurnsToOldEvents(result.turns, nftMap, matchPlayers, heroTokenIds) as EngineEvent[];
+    matchEvent.events = convertTurnsToOldEvents(result.turns, nftMap, playerNames, heroTokenIds) as EngineEvent[];
     matchEvent.rankings = result.rankings.map((r, i) => ({
       idx: r.idx,
       heroId: heroTokenIds[r.idx] ?? 0,
