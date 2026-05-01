@@ -11,4 +11,5 @@ old/contracts/out/
 old/contracts/cache/
 .DS_Store
 frontend/dist/
+output/
 CLAUDE.md
